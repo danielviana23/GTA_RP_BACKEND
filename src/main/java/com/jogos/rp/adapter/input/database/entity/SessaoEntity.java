@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.xml.ws.BindingType;
 import java.util.List;
 
 @Getter
