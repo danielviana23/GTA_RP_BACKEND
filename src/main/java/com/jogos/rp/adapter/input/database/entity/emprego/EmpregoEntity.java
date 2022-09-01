@@ -19,7 +19,7 @@ public class EmpregoEntity {
 
     @Id
     @Column(name = "ID_EMPREGO")
-    private String id;
+    private Integer id;
 
     @Column(name = "NOME")
     private String nomeEmprego;

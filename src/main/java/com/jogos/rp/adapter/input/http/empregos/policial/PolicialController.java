@@ -1,4 +1,4 @@
-package com.jogos.rp.adapter.input.http.empregos;
+package com.jogos.rp.adapter.input.http.empregos.policial;
 
 import com.jogos.rp.adapter.input.http.dto.PrisaoDTO;
 import org.springframework.http.ResponseEntity;
