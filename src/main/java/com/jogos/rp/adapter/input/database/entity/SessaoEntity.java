@@ -21,6 +21,6 @@ public class SessaoEntity {
     @Column(name = "ID_SESSAO")
     private Integer idSessao;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<JogadorEntity> jogadores;
 }
