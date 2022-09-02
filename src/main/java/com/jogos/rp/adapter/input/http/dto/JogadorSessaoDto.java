@@ -12,6 +12,6 @@ import java.util.UUID;
 public class JogadorSessaoDto {
 
     public JogadorSessaoDto() {}
-    private String id_jogador;
+    private Integer id_jogador;
     private Integer id_sessao;
 }

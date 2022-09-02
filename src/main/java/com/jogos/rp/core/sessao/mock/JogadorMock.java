@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class JogadorMock {
 
-    public static JogadorEntity criarJogador(UUID idJogador, String nomeJogador) {
+    public static JogadorEntity criarJogador(Integer idJogador, String nomeJogador) {
 
         JogadorEntity jogadorEntity = JogadorEntity.builder()
                 .idJogador(idJogador)

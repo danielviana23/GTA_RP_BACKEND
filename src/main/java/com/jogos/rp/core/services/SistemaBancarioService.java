@@ -17,7 +17,7 @@ public class SistemaBancarioService {
         this.jogadorRepository = jogadorRepository;
     }
 
-    public void transferirDinheiro(UUID jogadorOrigemDinheiro, BigDecimal dinheiroATransferir, UUID jogadorDestinoDinheiro) {
+    public void transferirDinheiro(Integer jogadorOrigemDinheiro, BigDecimal dinheiroATransferir, Integer jogadorDestinoDinheiro) {
         Optional<JogadorEntity> origemDinheiro = this.jogadorRepository.findById(jogadorOrigemDinheiro);
         Optional<JogadorEntity> destinoDinheiro = this.jogadorRepository.findById(jogadorDestinoDinheiro);
 

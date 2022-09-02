@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface JogadorRepository extends JpaRepository<JogadorEntity, UUID> {
+public interface JogadorRepository extends JpaRepository<JogadorEntity, Integer> {
 
 }

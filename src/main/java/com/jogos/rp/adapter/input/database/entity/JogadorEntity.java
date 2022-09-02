@@ -21,7 +21,7 @@ public class JogadorEntity {
 
     @Id
     @Column(name = "ID_JOGADOR")
-    private UUID idJogador;
+    private Integer idJogador;
 
     @Column(name = "NICKNAME_JOGADOR")
     private String nicknameJogador;
