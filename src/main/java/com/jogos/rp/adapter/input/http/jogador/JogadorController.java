@@ -1,20 +1,16 @@
 package com.jogos.rp.adapter.input.http.jogador;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jogos.rp.adapter.input.database.entity.JogadorEntity;
-import com.jogos.rp.adapter.input.database.entity.SessaoEntity;
-import com.jogos.rp.adapter.input.database.entity.emprego.EmpregoEntity;
+import com.jogos.rp.adapter.input.database.entity.LoginEntity;
 import com.jogos.rp.adapter.input.database.repository.emprego.EmpregoRepository;
 import com.jogos.rp.adapter.input.database.repository.jogador.JogadorRepository;
 import com.jogos.rp.adapter.input.database.repository.jogador.sessao.SessaoRepository;
-import com.jogos.rp.adapter.input.http.dto.JogadorEmpregoDto;
-import com.jogos.rp.model.PlayerModel;
-import org.springframework.http.HttpHeaders;
+import com.jogos.rp.adapter.input.http.dto.JogadorDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -35,11 +31,28 @@ public class JogadorController {
        this.empregoRepository = empregoRepository;
     }
 
-    @PostMapping("/criar_jogador")
-    public ResponseEntity<?> criarJogador(@RequestBody PlayerModel modelJogador) {
+    @CrossOrigin(origins = "*")
+    @PostMapping(value = "/criar_jogador")
+    public ResponseEntity<?> criarJogador(@RequestBody String modelJogador) throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        JogadorDto jogadorDto = mapper.readValue(modelJogador, JogadorDto.class);
+
+        Integer cpf = new Random().nextInt(500 * 1000000000);
+//        UUID idControle = UUID.randomUUID();
+        Integer idControle = cpf * 50;
+
+        LoginEntity login = LoginEntity.builder()
+                .idControle(idControle)
+                .gamertag(jogadorDto.getGamertag())
+                .senha(jogadorDto.getSenha())
+        .build();
 
         JogadorEntity jogadorEntity = JogadorEntity.builder()
-                .idJogador(new Random().nextInt(500 * 1000000000))
+                .idControle(idControle)
+                .cpf(cpf)
+                .gamerTag(jogadorDto.getGamertag())
+                .login(login)
                 .dinheiro(new BigDecimal("200"))
                 .sono(100)
                 .vida(100)
@@ -47,15 +60,19 @@ public class JogadorController {
                 .fome(100)
                 .produtos(null)
                 .veiculos(null)
-                .nicknameJogador(modelJogador.getNickname())
+                .nicknameJogador("a")
                 .isJogadorPreso(false)
                 .armas(null)
         .build();
 
         this.jogadorRepository.save(jogadorEntity);
-        return ResponseEntity.status(201).body("Jogador " + jogadorEntity.getIdJogador() +  " criado com sucesso!");
+        ResponseEntity resp = ResponseEntity.status(201)
+                .body("Jogador " + jogadorEntity.getCpf() +  " criado com sucesso!");
+
+        return resp;
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/buscar_jogadores")
     public ResponseEntity<?> buscarJogadores() {
         List<JogadorEntity> jogadoresCadastrados = this.jogadorRepository.findAll();
@@ -64,18 +81,20 @@ public class JogadorController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(jogadoresCadastrados);
-
+        return ResponseEntity.status(200)
+                .body(jogadoresCadastrados);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/buscar_jogador/{id_jogador}")
-    public ResponseEntity<?> buscarJogador(@PathVariable(name = "id_jogador") Integer id_jogador) {
-        Optional<JogadorEntity> jogadorCadastrado = this.jogadorRepository.findById(id_jogador);
+    public ResponseEntity<?> buscarJogador(@PathVariable(name = "id_jogador") Integer cpf) {
+        Optional<JogadorEntity> jogadorCadastrado = this.jogadorRepository.buscarPorCpf(cpf);
 
         if(!jogadorCadastrado.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.status(200).body(jogadorCadastrado);
+        return ResponseEntity.status(200)
+                .body(jogadorCadastrado);
     }
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/sessao")
@@ -42,7 +41,7 @@ public class SessaoController {
     public ResponseEntity<?> inserirJogadorNaSessao(@RequestBody JogadorSessaoDto jogador) {
         Optional<SessaoEntity> sessao = this.sessaoRepository.findById(jogador.getId_sessao());
         if(sessao.isPresent()) {
-            Optional<JogadorEntity> jogadorEntity = this.jogadorRepository.findById(jogador.getId_jogador());
+            Optional<JogadorEntity> jogadorEntity = this.jogadorRepository.buscarPorCpf(jogador.getCpf());
             if(!(jogadorEntity.isPresent())) {
                 return ResponseEntity.status(404).body("Jogador não cadastrado! Cadastre-se antes de entrar na sessão");
             }
@@ -63,7 +62,7 @@ public class SessaoController {
             List<JogadorEntity> jogadoresNaSessao = sessao.get().getJogadores();
 
             for (JogadorEntity jogadorAtivo: jogadoresNaSessao) {
-                if(jogadorAtivo.getIdJogador().equals(jogador.getId_jogador())) {
+                if(jogadorAtivo.getCpf().equals(jogador.getCpf())) {
                     jogadoresNaSessao.remove(jogadorAtivo);
                     this.sessaoRepository.save(sessao.get());
                     return ResponseEntity.ok().body("Jogador removido da sessão com sucesso!");

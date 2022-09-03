@@ -14,6 +14,9 @@ public class VeiculoEntity {
     @Column(name = "ID_VEICULO")
     private Integer idVeiculo;
 
+    @Column(name = "NOME")
+    private Integer nomeVeiculo;
+
     @Column(name = "PRECO_VEICULO")
     private BigDecimal precoVeiculo;
 

@@ -38,16 +38,16 @@ public class SistemaPagamento {
                     EmpregoEntity empregoJogador = jogadorNaSessao.getEmprego();
                     if(!(empregoJogador == null)) {
                         BigDecimal salario = empregoJogador.getSalario();
-                        Optional<JogadorEntity> jogador = this.jogadorRepository.findById(jogadorNaSessao.getIdJogador());
+                        Optional<JogadorEntity> jogador = this.jogadorRepository.findById(jogadorNaSessao.getIdControle());
 
                         if (jogador.isPresent()) {
                             if (!(salario == null)) {
                                 jogador.get().setDinheiro(jogador.get().getDinheiro().add(salario));
                                 this.jogadorRepository.save(jogador.get());
-                                System.out.println("PAGAMENTO PARA OO JOGADOR ID " + jogador.get().getIdJogador() + " FOI REALIZADO COM SUCESSO");
+                                System.out.println("PAGAMENTO PARA OO JOGADOR ID " + jogador.get().getCpf() + " FOI REALIZADO COM SUCESSO");
                             }
                         } else {
-                            throw new Exception("Houve um problema com pagamento do jogador ID " + jogador.get().getIdJogador());
+                            throw new Exception("Houve um problema com pagamento do jogador ID " + jogador.get().getCpf());
                         }
                     }
                 }

@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -20,10 +19,17 @@ public class JogadorEntity {
     public JogadorEntity(){};
 
     @Id
-    @Column(name = "ID_JOGADOR")
-    private Integer idJogador;
+    private Integer idControle;
 
-    @Column(name = "NICKNAME_JOGADOR")
+    private Integer cpf;
+
+    @Column(name = "GAMERTAG")
+    private String gamerTag;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private LoginEntity login;
+
+    @Column(name = "NOME_PERSONAGEM")
     private String nicknameJogador;
 
     @Column(name = "INDICADOR_VIDA")
@@ -47,7 +53,7 @@ public class JogadorEntity {
     @OneToMany
     private List<ArmaEntity> armas;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private EmpregoEntity emprego;
 
     @Column(name = "DINHEIRO")
@@ -55,5 +61,8 @@ public class JogadorEntity {
 
     @Column(name = "INDICADOR_JOGADOR_PRESO")
     private boolean isJogadorPreso;
+
+    @Column(name = "SENHA")
+    private boolean senha;
 
 }

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class SistemaBancarioService {
@@ -17,9 +16,9 @@ public class SistemaBancarioService {
         this.jogadorRepository = jogadorRepository;
     }
 
-    public void transferirDinheiro(Integer jogadorOrigemDinheiro, BigDecimal dinheiroATransferir, Integer jogadorDestinoDinheiro) {
-        Optional<JogadorEntity> origemDinheiro = this.jogadorRepository.findById(jogadorOrigemDinheiro);
-        Optional<JogadorEntity> destinoDinheiro = this.jogadorRepository.findById(jogadorDestinoDinheiro);
+    public void transferirDinheiro(Integer cpfJogadorOrigemDinheiro, BigDecimal dinheiroATransferir, Integer cpfJogadorDestinoDinheiro) {
+        Optional<JogadorEntity> origemDinheiro = this.jogadorRepository.buscarPorCpf(cpfJogadorOrigemDinheiro);
+        Optional<JogadorEntity> destinoDinheiro = this.jogadorRepository.buscarPorCpf(cpfJogadorDestinoDinheiro);
 
 //        if(origemDinheiro.isPresent() && destinoDinheiro.isPresent()) {
 //            BigDecimal dinheiroOrigem = origemDinheiro.get().getDinheiro();

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/emprego")
@@ -26,7 +25,6 @@ public class EmpregoController {
 
     @GetMapping("/buscar_empregos")
     public ResponseEntity<?> buscarEmpregos() {
-
         return ResponseEntity.ok(this.empregoRepository.findAll());
     }
 
@@ -40,7 +38,7 @@ public class EmpregoController {
 
     @PostMapping("/associar_emprego_jogador")
     public ResponseEntity<?> empregarJogador(@RequestBody JogadorEmpregoDto jogadorEmprego) {
-        Optional<JogadorEntity> jogadorEncontrado = this.jogadorRepository.findById(jogadorEmprego.getId_jogador());
+        Optional<JogadorEntity> jogadorEncontrado = this.jogadorRepository.buscarPorCpf(jogadorEmprego.getCpfJogador());
         if(jogadorEncontrado.isPresent()) {
             Optional<EmpregoEntity> emprego = this.empregoRepository.findById(jogadorEmprego.getId_emprego());
             if(emprego.isPresent()) {

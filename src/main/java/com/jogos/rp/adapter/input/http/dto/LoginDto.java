@@ -5,14 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Builder
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
-public class JogadorEmpregoDto {
+public class LoginDto {
 
-    public JogadorEmpregoDto() {};
-    private Integer cpfJogador;
-    private Integer id_emprego;
+    public LoginDto(){}
+
+    private String usuario;
+    private String senha;
 
 }

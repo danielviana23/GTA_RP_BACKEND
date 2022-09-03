@@ -1,5 +1,7 @@
 package com.jogos.rp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jogos.rp.model.enums.EnumStatusJogador;
 import com.jogos.rp.model.enums.EnumStatusJogadorSessao;
 import com.sun.istack.NotNull;
@@ -14,9 +16,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PlayerModel {
 
     // TODO ADICIONAR VALIDADOR
+    private String gamertag;
     private String nickname;
     private Integer vida;
     private NecessidadesModel necessidades;
