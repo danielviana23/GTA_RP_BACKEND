@@ -43,11 +43,10 @@ public class AutenticacaoController {
 
         Optional<LoginEntity> loginEntity = loginRepository.buscarLogin(gamertag, senha);
         if(loginEntity.isPresent()) {
-
-            return ResponseEntity.ok().body(loginEntity.get().getIdControle());
+            return ResponseEntity.ok().body(TokenDto.builder().token(loginEntity.get().getIdControle()).build());
         }
 
         return ResponseEntity.status(404)
-                .body("Jogador não encontrado! Faça seu cadastro!");
+                .body(LoginErrorDto.builder().messageLoginErro("Jogador não encontrado").build());
     }
 }

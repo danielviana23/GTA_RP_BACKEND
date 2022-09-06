@@ -1,0 +1,59 @@
+Jogador:
+	- Criar/Deletar/Buscar um único jogador
+	- Buscar jogadores ativos na sessão
+	- Incluir/retirar/transferir objetos do seu inventário. ( isso inclui desde lanche à armas ).
+	
+
+Emprego:	
+	- Buscar empregos disponíveis
+	- Buscar um único emprego
+	- Associar emprego ao jogador
+	
+	Policial:
+		- ID EMPREGO = 1
+		- Consultar CPF ( já existe a função buscar jogador único )
+		- Prender/soltar jogador ( atualizar campo coluna isjogadorPreso para true se preso e false se nao preso )
+		- Revistar jogador ( nesse caso, basta pegar a função "buscar jogador único" e filtrar apenas pelo 
+		inventário do jogador para saber oque o jogador tem naquele momento ).
+		- Multar jogador
+
+	
+	Bandido:
+		- ID EMPREGO = 2
+		- Iniciar assalto ( seja em lojas ou NPC )
+
+
+	Vendedor:
+		- Comprar produtos pela internet.
+			- Ao comprar um produto, ele deve aguardar o caminhoneiro entregar. Para isso, será enviado um 
+			evento ( PEDIDO ) para o caminhoneiro entregar.
+
+		- Vender produtos comprados ( o preço do produto varia de acordo com oque o vendedor quiser, sem superfaturar )
+		
+		- Ser assaltado. Ao ser assaltado, o vendendor precisa entregar seus produtos ao bandido passando o ID do bandido
+	
+
+	Caminhoneiro:
+		- Pode entregar drogas ou produtos;
+		Ao receber o evento de ( PEDIDO ), o caminhoneiro recebe o local de retirada e de entrega do produto.
+		Ao chegar no local de retirada, o caminhoneiro precisa INCLUIR PRODUTO NO BAÚ DO VEÍCULO/CAMINHÃO )
+		
+		- Pode ser assaltado. Ao ser assaltado, o caminhoneiro pode tentar fugir ou entregar seus pertences.
+		O caminhoneiro pode contratar guarda-costa.
+
+	
+	Guarda-costa:
+		- Pode receber a solicitação para ser guarda-costa.
+
+
+	Bancário:
+		- Pode aprovar transferência de dinheiro entre jogadores;
+		- Pode realizar empréstimo;
+		- Pode consultar crédito e bens dos jogadores antes de conceder de fato o crédito para saber se o jogador
+		pode ou não receber créditos;
+
+		- Ao ser assaltado, o banco deve disparar um evento de assalto ao COPOM e transferir a quantia que está no caixa 
+		para o bandido;
+
+		
+		

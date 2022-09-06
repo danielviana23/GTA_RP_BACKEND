@@ -1,6 +1,11 @@
 package com.jogos.rp.adapter.input.http.empregos.policial;
 
+import com.jogos.rp.adapter.input.database.entity.JogadorEntity;
 import com.jogos.rp.adapter.input.http.dto.PrisaoDTO;
+import com.jogos.rp.core.port.jogador.JogadorModel;
+import com.jogos.rp.core.services.jogador.JogadorService;
+import com.jogos.rp.core.services.policia.PolicialService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,10 +13,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/emprego/policial")
 public class PolicialController {
 
-    @PostMapping("/prender_jogador")
-    public ResponseEntity<?> prenderJogador(@RequestBody PrisaoDTO prisaoDTO) {
-        // inserir id do jogador na tabela de prisão
-        // atualizar status de prisao do jogador para true
-        return ResponseEntity.ok(prisaoDTO);
+    private PolicialService policialService;
+
+    @PostMapping("/consultar_cpf/{cpf_cidadao}")
+    public ResponseEntity<?> prenderJogador(@PathVariable("cpf_cidadao") String cpf) {
+
+        JogadorEntity jogador = this.policialService.consultarCpf(JogadorModel.builder().cpf(Integer.getInteger(cpf)).build());
+        if(jogador == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jogador);
+        }
+        return ResponseEntity.ok(jogador);
     }
 }

@@ -10,7 +10,7 @@ public class JogadorMock {
         JogadorEntity jogadorEntity = JogadorEntity.builder()
                 .cpf(cpf)
                 .idControle(idControle)
-                .nicknameJogador(nickname)
+                .nomeJogador(nickname)
                 .vida(100)
                 .isJogadorPreso(false)
         .build();

@@ -30,7 +30,7 @@ public class JogadorEntity {
     private LoginEntity login;
 
     @Column(name = "NOME_PERSONAGEM")
-    private String nicknameJogador;
+    private String nomeJogador;
 
     @Column(name = "INDICADOR_VIDA")
     private Integer vida;
@@ -50,6 +50,9 @@ public class JogadorEntity {
     @OneToMany
     private List<ProdutoEntity> produtos;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private ContatoEntity contatoJogador;
+
     @OneToMany
     private List<ArmaEntity> armas;
 
@@ -64,5 +67,4 @@ public class JogadorEntity {
 
     @Column(name = "SENHA")
     private boolean senha;
-
 }

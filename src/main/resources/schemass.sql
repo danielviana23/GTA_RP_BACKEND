@@ -1,5 +1,3 @@
-use gta_rp;
-show tables;
 
 create table JOGADOR (
 	ID_JOGADOR INT,
