@@ -12,7 +12,7 @@ import lombok.Setter;
 public class JogadorEmpregoDto {
 
     public JogadorEmpregoDto() {};
-    private Integer cpfJogador;
+    private Integer id_jogador;
     private Integer id_emprego;
 
 }

@@ -1,5 +1,7 @@
 package com.jogos.rp.adapter.input.http.empregos;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jogos.rp.adapter.input.database.entity.JogadorEntity;
 import com.jogos.rp.adapter.input.database.entity.emprego.EmpregoEntity;
 import com.jogos.rp.adapter.input.database.repository.emprego.EmpregoRepository;
@@ -23,6 +25,7 @@ public class EmpregoController {
         this.jogadorRepository = jogadorRepository;
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/buscar_empregos")
     public ResponseEntity<?> buscarEmpregos() {
         return ResponseEntity.ok(this.empregoRepository.findAll());
@@ -37,8 +40,11 @@ public class EmpregoController {
     }
 
     @PostMapping("/associar_emprego_jogador")
-    public ResponseEntity<?> empregarJogador(@RequestBody JogadorEmpregoDto jogadorEmprego) {
-        Optional<JogadorEntity> jogadorEncontrado = this.jogadorRepository.buscarPorCpf(jogadorEmprego.getCpfJogador());
+    public ResponseEntity<?> empregarJogador(@RequestBody String jogadorEmpregoDto) throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        JogadorEmpregoDto jogadorEmprego= mapper.readValue(jogadorEmpregoDto, JogadorEmpregoDto.class);
+        Optional<JogadorEntity> jogadorEncontrado = this.jogadorRepository.buscarPorCpf(jogadorEmprego.getId_jogador());
         if(jogadorEncontrado.isPresent()) {
             Optional<EmpregoEntity> emprego = this.empregoRepository.findById(jogadorEmprego.getId_emprego());
             if(emprego.isPresent()) {
